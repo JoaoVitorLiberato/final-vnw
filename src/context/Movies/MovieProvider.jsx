@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
+
 import { MovieContext } from "./MovieContext"
 import requestsMovie from "../../plugins/services/movie/requests"
 import { useState, useEffect } from "react"
@@ -32,11 +33,10 @@ const MovieProvider = ({ children }) => {
           })
         })
           .catch(err => err)
-      
     }
 
     resquestMovie()
-  }, [])
+  }, [setAllDataMovie])
 
   
   return(

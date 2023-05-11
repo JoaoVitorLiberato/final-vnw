@@ -1,11 +1,14 @@
 import Routes from "./router/Routes"
 import MovieProvider from "./context/Movies/MovieProvider"
+import SupabaseProvider from "./context/Supabase/supabaseProvider"
 
 function App() {
   return (
-    <MovieProvider>
-      <Routes />
-    </MovieProvider>
+    <SupabaseProvider>
+      <MovieProvider>
+        <Routes />
+      </MovieProvider>
+    </SupabaseProvider>
   )
 }
 

@@ -44,7 +44,9 @@ export default function Layout({ children }) {
 
   return(
     <Container>
-      <Header>
+      <Header
+        className={`layout ${pathname === '/login' ? 'none' : ''}`}
+      >
         <Link
           to={"/"}
         >

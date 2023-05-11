@@ -19,6 +19,10 @@ export const Header = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 20px;
+
+  .none {
+    display: none;
+  }
 `
 
 export const Navbar = styled.nav`
