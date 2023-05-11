@@ -7,9 +7,9 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { useLocation } from "react-router-dom"
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import TheatersIcon from '@mui/icons-material/Theaters';
-import { MovieContext } from "../../context/Movies/MovieContext"
-import { IMAGE_PATH } from "../../plugins/configs/config"
-import requestsMovie from "../../plugins/services/movie/requests"
+import { MovieContext } from "../../../context/Movies/MovieContext"
+import { IMAGE_PATH } from "../../../plugins/configs/config"
+import requestsMovie from "../../../plugins/services/movie/requests"
 
 import { 
   Container, 
@@ -23,7 +23,7 @@ import {
 
 
 
-export default function Layout({ children }) {
+export default function LayoutPublic({ children }) {
 
   const { allDataMovie } = useContext(MovieContext)
   const [ dataMovieHeho, setDataMovieHero ] = useState(null)

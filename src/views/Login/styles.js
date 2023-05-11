@@ -10,6 +10,7 @@ export const Container = styled.div`
 export const Form = styled.form`
   width: 100%;
   border: 1px solid #fff;
+  border-radius: 15px;
   padding: 20px;
 
  .text-fields {
