@@ -5,15 +5,25 @@ import { supabaseRequests } from "../../plugins/services/supabase/requests"
 import supabase from "../../plugins/services/supabase/supabase"
 
 const SupabaseProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const { login, signup } = supabaseRequests()
+  const [user, setUser] = useState({
+    token: '',
+    user: []
+  })
+  const { login, signup, signout } = supabaseRequests()
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      console.log(session)
-      setUser(session?.user || null)
+      if(session !== null) {
+        localStorage.setItem("token", session.access_token)
+        localStorage.setItem("user", JSON.stringify(session.user))
+
+        setUser({
+          token: localStorage.getItem("token"),
+          user: JSON.parse(localStorage.getItem("user"))
+        })
+      }
     })
-  }, [setUser])
+  }, [])
 
   const signin = async (email, password) => {
     const response = await login(email, password)
@@ -28,9 +38,14 @@ const SupabaseProvider = ({ children }) => {
 
     return response
   }
+  
+  const logout = async () => {
+    const response = await signout()
+    return response
+  }
 
   return(
-    <SupabaseContext.Provider value={{ user, signin, register }}>
+    <SupabaseContext.Provider value={{ user, signin, register, logout }}>
       { children }
     </SupabaseContext.Provider>
   )

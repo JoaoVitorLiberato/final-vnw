@@ -3,8 +3,7 @@ import { Container, Content, Form } from "./styles"
 import Button from '@mui/material/Button';
 import { useState, useContext } from "react"
 import { SupabaseContext } from "../../context/Supabase/supabase";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [form, setForm] = useState({
@@ -12,6 +11,7 @@ export default function Login() {
     password: ''
   })
 
+  const { pathname } = useLocation()
   const navigate = useNavigate()
   const auth = useContext(SupabaseContext)
 
@@ -23,7 +23,13 @@ export default function Login() {
       if(email === undefined || ( password === undefined || password.length < 8 )) return false
 
       await auth.signin(email, password)
-      console.log("logou");
+
+      if(pathname === "/auth/adm") {
+        navigate(0)
+      } else {
+        navigate("/auth/adm")
+      }
+
       return true
     } catch (error) {
       console.log(error.message)
