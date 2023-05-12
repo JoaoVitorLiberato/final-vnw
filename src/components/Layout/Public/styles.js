@@ -11,6 +11,9 @@ export const Header = styled.header`
   height: 80px;
 
   position: fixed;
+  top: 0;
+  z-index: 999;
+  
   background-color: #1C1C1C;
   opacity: .8;
   backdrop-filter: blur(9px);
@@ -146,6 +149,17 @@ export const InfoMovies = styled.div`
   }
 
 `
+export const LoadingMSG = styled.h2`
+  text-align: center;
+  position: relative;
+  top: 250px;
+  margin: 0 250px;
+  font-size: 50px;
+  color: #fff;
+  background-color: purple;
+
+`
 export const Content = styled.div`
   width: 100%;
 `
+

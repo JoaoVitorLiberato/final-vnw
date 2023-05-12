@@ -8,8 +8,8 @@ import { useLocation } from "react-router-dom"
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import { MovieContext } from "../../../context/Movies/MovieContext"
-import { IMAGE_PATH } from "../../../plugins/configs/config"
-import requestsMovie from "../../../plugins/services/movie/requests"
+import { IMAGE_PATH_BANNER } from "../../../plugins/configs/config"
+import requestsAll from "../../../plugins/services/movie/requests"
 
 import { 
   Container, 
@@ -18,7 +18,8 @@ import {
   Navbar, 
   OtherOptions,
   Hero,
-  InfoMovies 
+  InfoMovies,
+  LoadingMSG
 } from "./styles"
 
 
@@ -28,18 +29,20 @@ export default function LayoutPublic({ children }) {
   const { allDataMovie, allDataSeries } = useContext(MovieContext)
   const [ dataMovieHeho, setDataMovieHero ] = useState(null)
   const { pathname } = useLocation()
-  const { setHero } = requestsMovie()
+  const { setHero } = requestsAll()
+
+  const heroMovie = allDataMovie.results.slice(0, 1)
+  const heroSerie = allDataSeries.results.slice(0, 1)
 
 
   setTimeout(() => {
     if (allDataMovie.results.length > 0) {
       setHero(pathname === "/filmes" || pathname === "/" ? "movie" : "tv",
-      pathname === "/filmes" || pathname === "/" ? allDataMovie.oneID : allDataSeries.oneID)
+      pathname === "/filmes" || pathname === "/" ? heroMovie[0].id : heroSerie[0].id)
         .then(response => {
           if(!response) return;
           return setDataMovieHero(response)
-        })
-          .catch(err => err)
+        }).catch(err => err)
     }
   }, 800)
 
@@ -92,7 +95,7 @@ export default function LayoutPublic({ children }) {
       </Header>
       <Hero
         image={dataMovieHeho !== null ? 
-          `${IMAGE_PATH}/original/${dataMovieHeho.backdrop_path}` : 
+          `${IMAGE_PATH_BANNER}/original/${dataMovieHeho.backdrop_path}` : 
           'https://doc.aljazeera.net/wp-content/uploads/2018/04/watch-intro-on-demand.jpg?resize=540%2C320'}
         >
         {
@@ -142,7 +145,9 @@ export default function LayoutPublic({ children }) {
                 </div>
               </div>
             </InfoMovies>  :
-            <h2>Carregando as informações</h2>
+            <LoadingMSG>
+              Carregando as informações
+            </LoadingMSG>
         }
       </Hero>
       <Content>

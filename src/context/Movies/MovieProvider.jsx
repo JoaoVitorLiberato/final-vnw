@@ -11,19 +11,17 @@ const MovieProvider = ({ children }) => {
   
   const [ allDataMovie, setAllDataMovie ] = useState({
     completeData: [],
-    results: [],
-    oneID: 0
+    results: []
   })
   
   const [ allDataSeries, setAllDataSeries ] = useState({
     completeData: [],
-    results: [],
-    oneID: 0
+    results: []
   })
   
   useEffect(() => {
     const requestAllData = async () => {
-      const numberAleatorio = Math.random() * 33 / 2 + 55 * 3
+      const numberAleatorio = Math.random() * 32 + 55 * 3
       const [ responseMovies, ResponseSeries ] = await Promise.all([
         list('movie', 'popular', Math.ceil(numberAleatorio)),
         list('tv', 'popular', Math.ceil(numberAleatorio)),
@@ -49,9 +47,8 @@ const MovieProvider = ({ children }) => {
             }
         }),
         oneID: ResponseSeries.results[0].id
-      }) 
+      })
     }
-
     requestAllData()
   }, [])
 
