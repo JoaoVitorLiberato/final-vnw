@@ -25,7 +25,7 @@ import {
 
 export default function LayoutPublic({ children }) {
 
-  const { allDataMovie } = useContext(MovieContext)
+  const { allDataMovie, allDataSeries } = useContext(MovieContext)
   const [ dataMovieHeho, setDataMovieHero ] = useState(null)
   const { pathname } = useLocation()
   const { setHero } = requestsMovie()
@@ -33,7 +33,8 @@ export default function LayoutPublic({ children }) {
 
   setTimeout(() => {
     if (allDataMovie.results.length > 0) {
-      setHero(allDataMovie.oneID)
+      setHero(pathname === "/filmes" || pathname === "/" ? "movie" : "tv",
+      pathname === "/filmes" || pathname === "/" ? allDataMovie.oneID : allDataSeries.oneID)
         .then(response => {
           if(!response) return;
           return setDataMovieHero(response)
@@ -44,9 +45,7 @@ export default function LayoutPublic({ children }) {
 
   return(
     <Container>
-      <Header
-        className={`layout ${pathname === '/login' ? 'none' : ''}`}
-      >
+      <Header>
         <Link
           to={"/"}
         >

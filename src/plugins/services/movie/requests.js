@@ -1,9 +1,9 @@
 import conectMovie from "./movie"
 
 
-const requestsMovie = () => ({
+const requestsAll = () => ({
   list: async (segment, type, page) => {
-    const { data } = await conectMovie.get(`/${segment === '' ? segment : 'movie'}/${type === '' ? type : 'popular'}?language=pt-BR&page=${page}`)
+    const { data } = await conectMovie.get(`/${segment}/${type === '' ? type : 'popular'}?include_adult=false&language=pt-BR&page=${page}`)
     
     if(!data) {
       console.log("Error ao conectar com api")
@@ -12,8 +12,8 @@ const requestsMovie = () => ({
 
     return data
   },
-  setHero: async (id) => {
-    const { data } = await conectMovie.get(`/movie/${id}`)
+  setHero: async (path, id) => {
+    const { data } = await conectMovie.get(`/${path}/${id}&include_adult=false`)
     
     if(!data) {
       console.log("Error ao conectar com api")
@@ -24,4 +24,4 @@ const requestsMovie = () => ({
   }
 })
 
-export default requestsMovie
+export default requestsAll

@@ -2,46 +2,63 @@
 /* eslint-disable react/prop-types */
 
 import { MovieContext } from "./MovieContext"
-import requestsMovie from "../../plugins/services/movie/requests"
+import requestsAll from "../../plugins/services/movie/requests"
 import { useState, useEffect } from "react"
 
-const MovieProvider = ({ children }) => {
-  const { list } = requestsMovie()
 
+const MovieProvider = ({ children }) => {
+  const { list } = requestsAll()
+  
   const [ allDataMovie, setAllDataMovie ] = useState({
     completeData: [],
     results: [],
     oneID: 0
   })
-  const numberAleatorio = Math.random() * 33 / 2 + 55 * 3
-
-
+  
+  const [ allDataSeries, setAllDataSeries ] = useState({
+    completeData: [],
+    results: [],
+    oneID: 0
+  })
+  
   useEffect(() => {
-    
-    const resquestMovie = async () => {
-      await list('movie', 'popular', Math.ceil(numberAleatorio))
-        .then(response => {
-          setAllDataMovie({
-            completeData: response,
-            results: response.results.map(
-              item => {
-                return {
-                  ...item
-                }
-            }),
-            oneID: response.results[0].id
-          })
-        })
-          .catch(err => err)
+    const requestAllData = async () => {
+      const numberAleatorio = Math.random() * 33 / 2 + 55 * 3
+      const [ responseMovies, ResponseSeries ] = await Promise.all([
+        list('movie', 'popular', Math.ceil(numberAleatorio)),
+        list('tv', 'popular', Math.ceil(numberAleatorio)),
+      ])
+
+      setAllDataMovie({
+        completeData: responseMovies,
+        results: responseMovies.results.map(
+          item => {
+            return {
+              ...item
+            }
+        }),
+        oneID: responseMovies.results[0].id
+      })
+
+      setAllDataSeries({
+        completeData: ResponseSeries,
+        results: ResponseSeries.results.map(
+          item => {
+            return {
+              ...item
+            }
+        }),
+        oneID: ResponseSeries.results[0].id
+      }) 
     }
 
-    resquestMovie()
-  }, [setAllDataMovie])
+    requestAllData()
+  }, [])
 
   
   return(
     <MovieContext.Provider 
-      value={{ allDataMovie }}
+      value={{ allDataMovie, allDataSeries }}
     >
       { children }
     </MovieContext.Provider>
