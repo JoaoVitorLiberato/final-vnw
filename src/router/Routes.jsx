@@ -31,7 +31,11 @@ export default function Routes() {
           </LayoutPublic>
         } 
       />
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={
+        <LayoutPublic>
+          <Login />
+        </LayoutPublic>
+      } />
       <Route path="/cadastrar" element={<Signup />} />
       <Route path="/auth/adm" 
         element={

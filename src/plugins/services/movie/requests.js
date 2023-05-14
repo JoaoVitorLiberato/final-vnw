@@ -21,7 +21,17 @@ const requestsAll = () => ({
     }
 
     return data
-  }
+  },
+  searchTitle: async ( segment, search ) => {
+    const { data } = await conectMovie.get(`search/${segment}?query=${search}`)
+    
+    if(!data) {
+      console.log("Error ao conectar com api")
+      return;
+    }
+
+    return data
+  },
 })
 
 export default requestsAll

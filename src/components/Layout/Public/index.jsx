@@ -1,76 +1,95 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState } from "react"
 import { Link } from "react-router-dom"
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { useLocation } from "react-router-dom"
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import TheatersIcon from '@mui/icons-material/Theaters';
-import { MovieContext } from "../../../context/Movies/MovieContext"
-import { IMAGE_PATH_BANNER } from "../../../plugins/configs/config"
-import requestsAll from "../../../plugins/services/movie/requests"
+import { useState } from "react";
+import MenuIcon from '@mui/icons-material/Menu';
+import { Search } from "@mui/icons-material";
+import DialogMenu from "../../DialogMenu";
+import CardPosters from "../../CardPosters";
+import { IMAGE_PATH_POSTER } from "../../../plugins/configs/config";
+import Carousel from 'react-elastic-carousel';
+import requestsAll from "../../../plugins/services/movie/requests";
 
-import { 
-  Container, 
-  Content, 
-  Header, 
-  Navbar, 
+import {
+  Container,
+  Content,
+  HeaderDesktop,
+  Navbar,
   OtherOptions,
-  Hero,
-  InfoMovies,
-  LoadingMSG
+  HeaderMobile,
+  DialogContainer,
+  Results
 } from "./styles"
 
 
 
 export default function LayoutPublic({ children }) {
-
-  const { allDataMovie, allDataSeries } = useContext(MovieContext)
-  const [ dataMovieHeho, setDataMovieHero ] = useState(null)
   const { pathname } = useLocation()
-  const { setHero } = requestsAll()
+  const [ menu, setMenu ] = useState(false)
+  const [ input, setInput ] = useState("")
+  const [ stateResultSearch, setStateResultSearch ] = useState([])
+  const { searchTitle } = requestsAll()
 
-  const heroMovie = allDataMovie.results.slice(0, 1)
-  const heroSerie = allDataSeries.results.slice(0, 1)
+  const handleOpenMenu = () => {
+    return setMenu(true)
+  }
 
-
-  setTimeout(() => {
-    if (allDataMovie.results.length > 0) {
-      setHero(pathname === "/filmes" || pathname === "/" ? "movie" : "tv",
-      pathname === "/filmes" || pathname === "/" ? heroMovie[0].id : heroSerie[0].id)
-        .then(response => {
-          if(!response) return;
-          return setDataMovieHero(response)
-        }).catch(err => err)
+  const search = async (segment, input) => {
+    const response = await searchTitle(segment, input)
+    
+    if(!("results" in response)) {
+      console.log("Filme ou Serie não encontrada!");
     }
-  }, 800)
 
-  return(
+    return response.results
+  }
+
+  const handleSearchSubmit = async (event) => {
+    event.preventDefault()
+
+    if(input === "") return;
+
+    const response = await search(
+      pathname === "/filmes" || pathname === "/" ? "movie" : "tv",
+      input
+    )
+
+    console.log("Pesquisa encontrada!")
+
+    setInput("")
+    return setStateResultSearch(response)
+  }
+
+  return (
     <Container>
-      <Header>
+      <HeaderDesktop
+        className="fix-header-desktop"
+      >
         <Link
           to={"/"}
         >
-          <img 
-            src="/img/logo.svg" 
+          <img
+            src="/img/logo.svg"
             alt="Logo"
           />
         </Link>
         <Navbar>
           <ul>
             <li>
-              <Link 
-                className={`link ${ pathname === '/series' ? 'active' : ''}`}
+              <Link
+                className={`link ${pathname === '/series' ? 'active' : ''}`}
                 to={"/series"}
               >
                 Séries
               </Link>
             </li>
             <li>
-              <Link 
+              <Link
                 to={"/filmes"}
-                className={`link ${pathname === '/filmes' || pathname === '/'? 'active' : ''}`}
+                className={`link ${pathname === '/filmes' || pathname === '/' ? 'active' : ''}`}
               >
                 Filmes
               </Link>
@@ -78,80 +97,118 @@ export default function LayoutPublic({ children }) {
           </ul>
         </Navbar>
         <OtherOptions>
-          <Button 
+          <Button
             variant="text"
             className="fix-svg"
+            onClick={() => setMenu(true)}
           >
-           <SearchIcon />
+            <SearchIcon />
           </Button>
-            <Button
-              variant="text"
-              className="fix-svg button-meio"
-            >
-              <FilterAltIcon />
-            </Button>
-            <Link to={"/login"}>Login</Link>
+          <Button
+            variant="text"
+            className="fix-svg button-meio"
+          >
+            <FilterAltIcon />
+          </Button>
+          <Link to={"/login"}>Login</Link>
         </OtherOptions>
-      </Header>
-      <Hero
-        image={dataMovieHeho !== null ? 
-          `${IMAGE_PATH_BANNER}/original/${dataMovieHeho.backdrop_path}` : 
-          'https://doc.aljazeera.net/wp-content/uploads/2018/04/watch-intro-on-demand.jpg?resize=540%2C320'}
+      </HeaderDesktop>
+      <HeaderMobile
+        className="fix-header-mobile"
+      >
+        <Link
+          to={"/"}
         >
-        {
-          dataMovieHeho !== null ?
-            <InfoMovies>
-              <h1>{ dataMovieHeho.title }</h1>
-              <small>
-                {dataMovieHeho.runtime} min |
+          <img
+            src="/img/logo.svg"
+            alt="Logo"
+          />
+        </Link>
+        <Button 
+          variant="text" 
+          className="fix-svg"
+          size="large"
+          onClick={handleOpenMenu}
+        >
+          <MenuIcon />
+        </Button>
+      </HeaderMobile>
+      <DialogMenu
+        open={menu}
+        close={() => setMenu(false)}
+      >
+        <DialogContainer>
+
+          <form
+            onSubmit={handleSearchSubmit}
+          >
+            <input 
+              type="text"
+              placeholder="Nome do Filme"
+              onChange={e => setInput(e.target.value)}
+            />
+            <button
+              className="button-form"
+              type="submit"
+            >
+              <Search />
+            </button>
+          </form>
+          <Results>
+            <div
+              className="results-mobile"
+            >
+                <Carousel
+                  itemsToShow={1}
+                  pagination={false}
+                >
+                  {
+                    stateResultSearch ?
+                    stateResultSearch.map(item => (
+                      <CardPosters
+                        key={item.id}
+                        image={`${IMAGE_PATH_POSTER}${item.poster_path}`}
+                        altImage="Imagem de posters de filmes"
+                        title={item.title}
+                        year={item.release_date}
+                      />
+                    )) :
+                    <h2>Not</h2>
+                    
+                  }
+                </Carousel>
+            </div>
+            <div
+              className="results-desktop"
+            >
+              <span>
+                Pesquisa sobre: { input }
+              </span>
+              <Carousel
+                itemsToShow={5}
+                pagination={false}
+              >
                 {
-                  dataMovieHeho.genres.map(item => {
-                    return (<span key={item.id}> { item.name } </span>) 
-                  }) 
-                }| 
-                <span>
-                  { dataMovieHeho.release_date }
-                </span>
-               </small>
-              <div className="stickts">
-                <img 
-                  src="/img/star.svg"
-                  alt="Svg de uma estrela"
-                />
-                <span>
-                  { Math.ceil(dataMovieHeho.vote_average) } / 10
-                </span>
-                <div>
-                  <span>
-                    IMDb
-                  </span>
-                </div>
-              </div>
-              <p>
-                { dataMovieHeho.overview }
-              </p>
-              <div className="content-button">
-                <div className="button">
-                  <PlayArrowIcon />
-                  <span>
-                    Assitir Agora
-                  </span>
-                </div>
-                <div className="button">
-                  <TheatersIcon />
-                  <span>
-                    Trailer
-                  </span>
-                </div>
-              </div>
-            </InfoMovies>  :
-            <LoadingMSG>
-              Carregando as informações
-            </LoadingMSG>
-        }
-      </Hero>
+                  stateResultSearch ?
+                  stateResultSearch.map(item => (
+                    <CardPosters
+                      key={item.id}
+                      image={`${IMAGE_PATH_POSTER}${item.poster_path}`}
+                      altImage="Imagem de posters de filmes"
+                      title={item.title}
+                      year={item.release_date}
+                    />
+                  )) :
+                  <h2>Not</h2>
+                  
+                }
+              </Carousel>
+            </div>
+          </Results>
+        </DialogContainer>
+      </DialogMenu>
       <Content>
-        { children }
+        {children}
       </Content>
     </Container>
   )

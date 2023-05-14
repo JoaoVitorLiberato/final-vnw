@@ -4,28 +4,33 @@ export const Container = styled.div`
   .fix-svg {
     color: #F6F6F6 !important;
   }
+
+  @media(max-width: 700px) {
+    .fix-header-desktop {
+      display: none;
+    }
+  }
+
+  @media(min-width: 701px) {
+    .fix-header-mobile {
+      display: none;
+    }
+  }
 `
 
-export const Header = styled.header`
-  width: 100%;
-  height: 80px;
-
+export const HeaderDesktop = styled.header`
   position: fixed;
   top: 0;
   z-index: 999;
-  
-  background-color: #1C1C1C;
-  opacity: .8;
+
+  width: 100%;
+  height: 80px;
   backdrop-filter: blur(9px);
 
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-
-  .none {
-    display: none;
-  }
 `
 
 export const Navbar = styled.nav`
@@ -38,13 +43,12 @@ export const Navbar = styled.nav`
   }
   
   ul li .link {
-    color: #F6F6F6;
+    color: #fff;
 
   }
 
   .active {
-    background-color:  #F6F6F6;
-    color: #000 !important;
+    background-color: #747474;
     padding: 10px 30px;
     border-radius: 20px;
   }
@@ -64,101 +68,64 @@ export const OtherOptions = styled.div`
   }
 `
 
-export const Hero = styled.div`
-    width: 100%;
-    height:100vh;
-    background-image: url(${props => props.image});
-    background-size:cover;
-    background-repeat:no-repeat;
+export const HeaderMobile = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 999;
 
-    @media(max-width: 768px) {
-        background-size:contain;
-        height: 400px;
-    }
+  width: 100%;
+  height: 80px;
+  backdrop-filter: blur(9px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
 `
 
-export const InfoMovies = styled.div`
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto ;
-  color: #fff;
+export const DialogContainer = styled.div`
+  form {
+    position: relative;
+    width: 100%;
 
-  position: relative;
-  top: 55vh;
-  left: -80px;
-
-  h1 {
-    font-size: 40px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  small {
-    position: absolute;
-    top: 50px;
-  }
-
-  .stickts {
-    width: 160px;
-    margin: 28px 0 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    div {
-      background-color: #F3CD32;
-      padding: 0 2px;
-      span {
-        font-weight: 900;
-        color: #000;
-      }
+    input[type=text] {
+      width: 100%;
+      padding: 5px;
     }
-  }
-
-  p {
-    margin-bottom: 20px;
-  }
-
-  .content-button {
-    display: flex;
-    .button {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      padding: 15px 20px;
+    
+    .button-form {
+      position: absolute;
+      background-color: transparent;
+      top:5px;
+      right: 6px;
       border: none;
-      border-radius: 15px;
-      background-color: #D53A00;
-      transition: all 0.5s ease-in-out;
+      outline: none;
+      border-radius: 50%;
 
       svg {
-        width: 30px;
-        height: 30px;
-        padding-right: 5px;
+        width: 20px;
+        height: 20px;
       }
 
-      &:hover {
-        opacity: .4;
-      }
-    }
-
-    .button:nth-child(2) {
-      margin-left: 15px;
-      background-color: #717171;
     }
   }
-
 `
-export const LoadingMSG = styled.h2`
-  text-align: center;
-  position: relative;
-  top: 250px;
-  margin: 0 250px;
-  font-size: 50px;
-  color: #fff;
-  background-color: purple;
 
+export const Results = styled.div`
+  margin-top: 50px;
+
+  .results-desktop {
+    @media(max-width:600px) {
+      display: none;
+    }
+  }
+  .results-mobile {
+    @media(min-width:601px) {
+      display: none;
+    }
+  }
 `
+
 export const Content = styled.div`
   width: 100%;
 `

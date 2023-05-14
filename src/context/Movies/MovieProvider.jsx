@@ -51,7 +51,6 @@ const MovieProvider = ({ children }) => {
     }
     requestAllData()
   }, [])
-
   
   return(
     <MovieContext.Provider 

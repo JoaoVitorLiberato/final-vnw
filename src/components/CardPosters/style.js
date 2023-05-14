@@ -4,7 +4,12 @@ export const Container = styled.div`
   width: 150px;
   height: 263px;
   background-color: #000;
-  margin: 5px 10px;
+  margin: 20px 5px;
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar{
+    width: 1px;
+  }
 `
 
 export const Image = styled.img`
@@ -14,8 +19,11 @@ export const Image = styled.img`
   padding-bottom: 5px;
 `
 
-export const Title = styled.h5`
+export const Title = styled.span`
+display: block;
+  font-size: 12px;
 `
 
 export const Year = styled.small`
+  font-size: 9px;
 `
