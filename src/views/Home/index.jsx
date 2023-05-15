@@ -10,6 +10,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import { IMAGE_PATH_BANNER } from "../../plugins/configs/config"
 import requestsAll from "../../plugins/services/movie/requests"
+import { transformArr } from "../../plugins/helpers/tranformArrAndCut"
 
 import {
   Container,
@@ -71,7 +72,7 @@ export default function Home() {
                   alt="Svg de uma estrela"
                 />
                 <span>
-                  {Math.ceil(dataMovieHeho.vote_average)} / 10
+                  {transformArr(dataMovieHeho.vote_average, 3)} / 10
                 </span>
                 <div>
                   <span>
@@ -102,10 +103,10 @@ export default function Home() {
             </LoadingMSG>
         }
       </Hero>
+      <h2>Últimos lançamentos.</h2>
       {
         (pathname === "/filmes" || pathname === "/") &&
         <ContainerMovies>
-          <h2>Filmes</h2>
           <Carousel
             itemsToShow={width <= 950 ? 1 : 5}
             pagination={false}
@@ -120,27 +121,7 @@ export default function Home() {
                       image={`${IMAGE_PATH_POSTER}${item.poster_path}`}
                       altImage="Imagem de posters de filmes"
                       title={item.title}
-                      year={item.release_date}
-                    />
-                  </div>
-                )) : <h2>Sem filmes</h2>
-            }
-          </Carousel>
-          <Carousel
-            itemsToShow={width > 950 ? 5 : 1}
-            pagination={false}
-          >
-            {
-              allDataMovie !== null ?
-                allDataMovie.results.map(item => (
-                  <div
-                    key={item.id}
-                  >
-                    <CardPosters
-                      image={`${IMAGE_PATH_POSTER}${item.poster_path}`}
-                      altImage="Imagem de posters de filmes"
-                      title={item.title}
-                      year={item.release_date}
+                      year={transformArr(item.release_date, 4)}
                     />
                   </div>
                 )) : <h2>Sem filmes</h2>
@@ -151,7 +132,6 @@ export default function Home() {
       {
         pathname === "/series" &&
         <ContainerSeries>
-          <h2>Series</h2>
           <Carousel
             itemsToShow={width <= 950 ? 1 : 5}
             pagination={false}
@@ -175,6 +155,7 @@ export default function Home() {
           </Carousel>
         </ContainerSeries>
       }
+      <h2>Em alta</h2>
     </Container>
   )
 }

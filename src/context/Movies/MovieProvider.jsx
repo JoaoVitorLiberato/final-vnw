@@ -49,6 +49,7 @@ const MovieProvider = ({ children }) => {
         oneID: ResponseSeries.results[0].id
       })
     }
+    
     requestAllData()
   }, [])
   

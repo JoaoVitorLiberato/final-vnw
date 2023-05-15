@@ -1,6 +1,14 @@
 import styled from "styled-components";
 
-export const Container = styled.div``
+export const Container = styled.div`
+  h2 {
+    font-size: 18px;
+    color: #fff;
+    text-shadow: 0px 3px 6px #00000069;
+    padding: 25px 115px 15px;
+    transform: translateY(25px);
+  }
+`
 
 export const Hero = styled.div`
     width: 100%;
@@ -11,8 +19,8 @@ export const Hero = styled.div`
     background-position: center;
 
     @media(max-width: 768px) {
-        background-size:contain;
-        height: 400px;
+      background-size:contain;
+      height: 400px;
     }
 `
 
@@ -97,9 +105,29 @@ export const LoadingMSG = styled.h2`
 `
 
 export const ContainerMovies= styled.div`
-  color: #fff;
+  padding: 0 30px 0 20px;
+
+  button {
+    background-color: transparent;
+    box-shadow: none;
+
+    &:hover {
+      outline: none;
+      background-color: transparent;
+    }
+  }
 `
 
 export const ContainerSeries= styled.div`
   color: #fff;
+
+  button {
+    background-color: transparent;
+    box-shadow: none;
+
+    &:hover {
+      outline: none;
+      background-color: transparent;
+    }
+  }
 `
