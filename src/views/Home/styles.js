@@ -1,12 +1,33 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+
   h2 {
     font-size: 18px;
     color: #fff;
     text-shadow: 0px 3px 6px #00000069;
     padding: 25px 115px 15px;
     transform: translateY(25px);
+  }
+`
+export const Nav = styled.nav`
+  color: #fff;
+  
+  ul {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 15px;
+
+    li a {
+      cursor: pointer;
+    }
+  }
+
+  .fix-svg {
+    color: #F6F6F6 !important;
   }
 `
 
@@ -29,17 +50,12 @@ export const InfoMovies = styled.div`
   max-width: 900px;
   margin: 0 auto ;
   color: #fff;
-
+  transform: translateY(265px);
 
   h1 {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     text-transform: uppercase;
-  }
-
-  small {
-    position: absolute;
-    top: 50px;
   }
 
   .stickts {
@@ -60,7 +76,14 @@ export const InfoMovies = styled.div`
   }
 
   p {
-    margin-bottom: 20px;
+    width: 600px;
+    height: 100px;
+    overflow-y: scroll;
+    font-size: 14px;
+
+    ::-webkit-scrollbar{
+      width: 1px;
+    }
   }
 
   .content-button {
@@ -104,7 +127,7 @@ export const LoadingMSG = styled.h2`
 
 `
 
-export const ContainerMovies= styled.div`
+export const ContainerUltimosLancamentos = styled.div`
   padding: 0 30px 0 20px;
 
   button {
@@ -118,16 +141,36 @@ export const ContainerMovies= styled.div`
   }
 `
 
-export const ContainerSeries= styled.div`
-  color: #fff;
+export const ContainerEmAlta= styled.div`
+  width: 100%;
+  max-width: 1200px;
+  height: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px auto 30px;
+  overflow-y: scroll;
 
-  button {
-    background-color: transparent;
-    box-shadow: none;
+  ::-webkit-scrollbar{
+    width: 1px;
+  }
+`
 
-    &:hover {
-      outline: none;
+export const Pagination= styled.div`
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  .content {
+    display: flex;
+    justify-content: center;
+
+    button {
+      color: #fff;
       background-color: transparent;
+      padding: 10px;
+      border-color: #fff;
+      border-radius: 50%;
+      margin: 0 5px;
     }
   }
 `

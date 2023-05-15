@@ -3,8 +3,13 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 90px auto 0;
   color: #fff;
+
+  h2 {
+    text-align: center;
+    text-transform: uppercase;
+  }
 `
 
 export const Form = styled.form`

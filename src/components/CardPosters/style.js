@@ -4,7 +4,8 @@ export const Container = styled.div`
   width: 150px;
   height: 263px;
   background-color: #000;
-  margin: 20px 5px;
+  color: #fff;
+  margin: 20px 8px;
   overflow-y: scroll;
 
   ::-webkit-scrollbar{

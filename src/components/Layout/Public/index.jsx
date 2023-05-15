@@ -27,10 +27,11 @@ import {
 
 
 export default function LayoutPublic({ children }) {
-  const { pathname } = useLocation()
   const [ menu, setMenu ] = useState(false)
   const [ input, setInput ] = useState("")
   const [ stateResultSearch, setStateResultSearch ] = useState([])
+  
+  const { pathname } = useLocation()
   const { searchTitle } = requestsAll()
 
   const handleOpenMenu = () => {
@@ -79,20 +80,20 @@ export default function LayoutPublic({ children }) {
         <Navbar>
           <ul>
             <li>
-              <Link
+              <a
                 className={`link ${pathname === '/series' ? 'active' : ''}`}
-                to={"/series"}
+                href={"/series"}
               >
                 Séries
-              </Link>
+              </a>
             </li>
             <li>
-              <Link
-                to={"/filmes"}
+              <a
+                href={"/filmes"}
                 className={`link ${pathname === '/filmes' || pathname === '/' ? 'active' : ''}`}
               >
                 Filmes
-              </Link>
+              </a>
             </li>
           </ul>
         </Navbar>
@@ -138,7 +139,6 @@ export default function LayoutPublic({ children }) {
         close={() => setMenu(false)}
       >
         <DialogContainer>
-
           <form
             onSubmit={handleSearchSubmit}
           >
@@ -163,7 +163,7 @@ export default function LayoutPublic({ children }) {
                   pagination={false}
                 >
                   {
-                    stateResultSearch ?
+                    stateResultSearch &&
                     stateResultSearch.map(item => (
                       <CardPosters
                         key={item.id}
@@ -172,24 +172,19 @@ export default function LayoutPublic({ children }) {
                         title={item.title}
                         year={item.release_date}
                       />
-                    )) :
-                    <h2>Not</h2>
-                    
+                    ))
                   }
                 </Carousel>
             </div>
             <div
               className="results-desktop"
             >
-              <span>
-                Pesquisa sobre: { input }
-              </span>
               <Carousel
                 itemsToShow={5}
                 pagination={false}
               >
                 {
-                  stateResultSearch ?
+                  stateResultSearch &&
                   stateResultSearch.map(item => (
                     <CardPosters
                       key={item.id}
@@ -198,9 +193,7 @@ export default function LayoutPublic({ children }) {
                       title={item.title}
                       year={item.release_date}
                     />
-                  )) :
-                  <h2>Not</h2>
-                  
+                  ))
                 }
               </Carousel>
             </div>

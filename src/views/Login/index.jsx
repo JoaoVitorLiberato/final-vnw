@@ -4,12 +4,15 @@ import Button from '@mui/material/Button';
 import { useState, useContext } from "react"
 import { SupabaseContext } from "../../context/Supabase/supabase";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Login() {
   const [form, setForm] = useState({
     email: '',
     password: ''
   })
+  const [loading, setLoading] = useState(false)
+
 
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -17,29 +20,32 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    setLoading(true)
     try {
       const { email, password } = form
 
-      if(email === undefined || ( password === undefined || password.length < 8 )) return false
+      if(email === "" || ( password === "" || password.length < 8 )) return;
 
       await auth.signin(email, password)
-
-      if(pathname === "/auth/adm") {
-        navigate(0)
-      } else {
-        navigate("/auth/adm")
-      }
-
+      setTimeout(() => {
+        setLoading(false)
+        if(pathname === "/auth/adm") {
+          navigate(0)
+        } else {
+          navigate("/auth/adm")
+        }
+      }, 1500)
       return true
     } catch (error) {
-      console.log(error.message)
+      setLoading(false)
+      console.log(error)
       return false
     }
   }
 
   return(
     <Container>
-      <h1>Login</h1>
+      <h2>Login</h2>
       <Form onSubmit={handleSubmit}>
         <div
           className="text-fields"
@@ -72,7 +78,9 @@ export default function Login() {
             type="submit"
             disabled={form.email === '' || form.password === ''}
           >
-            Login
+            {
+              loading ?  <CircularProgress color="warning" size={20}/> : 'Login'
+            }
           </Button>
           <Link
             to={"/cadastrar"}

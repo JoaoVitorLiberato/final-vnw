@@ -32,6 +32,16 @@ const requestsAll = () => ({
 
     return data
   },
+  trendingSegment: async ( segment, page ) => {
+    const { data } = await conectMovie.get(`trending/${segment}/day?include_adult=false&language=pt-BR&page=${page}`)
+
+    if(!data) {
+      console.log("Error ao conectar com api")
+      return;
+    }
+
+    return data
+  },
 })
 
 export default requestsAll

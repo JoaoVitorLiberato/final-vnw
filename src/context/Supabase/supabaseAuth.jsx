@@ -7,7 +7,10 @@ const SupabaseAuth = ({ children }) => {
 
   if(!token && !user) {
     return <Login />
-  } else {
+  } else if (token && user) {
+    return<>{children}</>
+  }
+   else {
     return<>{children}</>
   }
 }

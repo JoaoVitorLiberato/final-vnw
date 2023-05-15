@@ -7,7 +7,7 @@ import supabase from "../../plugins/services/supabase/supabase"
 const SupabaseProvider = ({ children }) => {
   const [user, setUser] = useState({
     token: '',
-    user: []
+    client: []
   })
   const { login, signup, signout } = supabaseRequests()
 
@@ -19,7 +19,7 @@ const SupabaseProvider = ({ children }) => {
 
         setUser({
           token: localStorage.getItem("token"),
-          user: JSON.parse(localStorage.getItem("user"))
+          client: JSON.parse(localStorage.getItem("user"))
         })
       }
     })

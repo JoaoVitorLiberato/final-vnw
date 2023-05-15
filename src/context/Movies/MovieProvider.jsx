@@ -4,17 +4,19 @@
 import { MovieContext } from "./MovieContext"
 import requestsAll from "../../plugins/services/movie/requests"
 import { useState, useEffect } from "react"
+import { useLocation } from "react-router-dom"
 
 
 const MovieProvider = ({ children }) => {
-  const { list } = requestsAll()
+  const { list, trendingSegment } = requestsAll()
+  const { pathname } = useLocation()
   
-  const [ allDataMovie, setAllDataMovie ] = useState({
+  const [ allData, setAllData ] = useState({
     completeData: [],
     results: []
   })
   
-  const [ allDataSeries, setAllDataSeries ] = useState({
+  const [ trending, setTrending ] = useState({
     completeData: [],
     results: []
   })
@@ -22,31 +24,29 @@ const MovieProvider = ({ children }) => {
   useEffect(() => {
     const requestAllData = async () => {
       const numberAleatorio = Math.random() * 32 + 55 * 3
-      const [ responseMovies, ResponseSeries ] = await Promise.all([
+      const [ responseAllData, ResponseReting ] = await Promise.all([
         list('movie', 'popular', Math.ceil(numberAleatorio)),
-        list('tv', 'popular', Math.ceil(numberAleatorio)),
+        trendingSegment(pathname === "/filmes" || pathname === "/" ? "movie" : "tv", Math.ceil(numberAleatorio * 3)),
       ])
 
-      setAllDataMovie({
-        completeData: responseMovies,
-        results: responseMovies.results.map(
+      setAllData({
+        completeData: responseAllData,
+        results: responseAllData.results.map(
           item => {
             return {
               ...item
             }
-        }),
-        oneID: responseMovies.results[0].id
+        })
       })
 
-      setAllDataSeries({
-        completeData: ResponseSeries,
-        results: ResponseSeries.results.map(
+      setTrending({
+        completeData: ResponseReting,
+        results: ResponseReting.results.map(
           item => {
             return {
               ...item
             }
-        }),
-        oneID: ResponseSeries.results[0].id
+        })
       })
     }
     
@@ -55,7 +55,7 @@ const MovieProvider = ({ children }) => {
   
   return(
     <MovieContext.Provider 
-      value={{ allDataMovie, allDataSeries }}
+      value={{ allData, trending }}
     >
       { children }
     </MovieContext.Provider>
