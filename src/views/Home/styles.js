@@ -10,7 +10,7 @@ export const Container = styled.div`
     color: #fff;
     text-shadow: 0px 3px 6px #00000069;
     padding: 25px 115px 15px;
-    transform: translateY(25px);
+    transform: translate(-13px, 25px);
   }
 `
 export const Nav = styled.nav`
@@ -19,6 +19,7 @@ export const Nav = styled.nav`
   ul {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     margin-top: 15px;
 
     li a {
@@ -143,12 +144,12 @@ export const ContainerUltimosLancamentos = styled.div`
 
 export const ContainerEmAlta= styled.div`
   width: 100%;
-  max-width: 1200px;
-  height: 500px;
+  max-width: 1150px;
+  height: 600px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  margin: 20px auto 30px;
+  justify-content: space-evenly;
+  margin: 0px auto 30px;
   overflow-y: scroll;
 
   ::-webkit-scrollbar{

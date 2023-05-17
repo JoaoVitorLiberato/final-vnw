@@ -130,7 +130,7 @@ export default function Home() {
       <h2>Últimos lançamentos</h2>
       <ContainerUltimosLancamentos>
         <Carousel
-          itemsToShow={5}
+          itemsToShow={6}
           pagination={false}
         >
           {
