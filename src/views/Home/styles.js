@@ -25,6 +25,10 @@ export const Nav = styled.nav`
     li a {
       cursor: pointer;
     }
+
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
 
   .fix-svg {
@@ -40,7 +44,7 @@ export const Hero = styled.div`
     background-repeat:no-repeat;
     background-position: center;
 
-    @media(max-width: 768px) {
+    @media(max-width: 600px) {
       background-size:contain;
       height: 400px;
     }
@@ -53,10 +57,31 @@ export const InfoMovies = styled.div`
   color: #fff;
   transform: translateY(265px);
 
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (min-width: 600px) and (max-width: 769px) {
+    margin-left: 15px;
+  }
+
   h1 {
     font-size: 30px;
     font-weight: bold;
     text-transform: uppercase;
+
+    @media (max-width: 600px) {
+      font-size: 22px;
+    }
+  }
+
+  small {
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
 
   .stickts {
@@ -84,6 +109,10 @@ export const InfoMovies = styled.div`
 
     ::-webkit-scrollbar{
       width: 1px;
+    }
+
+    @media (max-width: 600px) {
+      display: none;
     }
   }
 
@@ -130,6 +159,18 @@ export const LoadingMSG = styled.h2`
 
 export const ContainerUltimosLancamentos = styled.div`
   padding: 0 30px 0 20px;
+
+  .desktop {
+    @media (max-width: 700px) {
+      display: none;
+    }
+  }
+
+  .mobile{
+    @media (min-width: 701px) {
+      display: none;
+    }
+  }
 
   button {
     background-color: transparent;

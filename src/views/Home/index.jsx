@@ -130,6 +130,39 @@ export default function Home() {
       <h2>Últimos lançamentos</h2>
       <ContainerUltimosLancamentos>
         <Carousel
+          className="mobile"
+          itemsToShow={1}
+          pagination={false}
+        >
+          {
+            trending.results &&
+            trending.results.map(item => (
+              pathname === "/filmes" || pathname === "/" ?
+                <div
+                  key={item.id}
+                >
+                  <CardPosters
+                    image={`${IMAGE_PATH_POSTER}${item.poster_path}`}
+                    altImage="Imagem de posters"
+                    title={item.title}
+                    year={transformArr(item.release_date, 4)}
+                  />
+                </div> :
+                <div
+                  key={item.id}
+                >
+                  <CardPosters
+                    image={`${IMAGE_PATH_POSTER}${item.poster_path}`}
+                    altImage="Imagem de posters"
+                    title={item.title ? item.title : item.name}
+                    year={transformArr(item.release_date, 4) ? transformArr(item.release_date, 4) : transformArr(item.first_air_date, 4)}
+                  />
+                </div>
+            ))
+          }
+        </Carousel>
+        <Carousel
+          className="desktop"
           itemsToShow={6}
           pagination={false}
         >
