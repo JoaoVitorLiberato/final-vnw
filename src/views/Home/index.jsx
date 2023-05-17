@@ -33,11 +33,11 @@ export default function Home() {
 
   const { setHero } = requestsAll()
   const { pathname } = useLocation()
-  const hero = trending.results.slice(0, 1)
-
+  
   useEffect(() => {
     setTimeout(() => {
-      if (allData.results.length > 0) {
+      if ("results" in trending && trending.results.length > 0) {
+        const hero = trending.results.slice(0, 1)
         setHero(pathname === "/filmes" || pathname === "/" ? "movie" : "tv",
           hero[0].id)
           .then(response => {
@@ -45,7 +45,7 @@ export default function Home() {
             return setDataHero(response)
           }).catch(err => err)
       }
-    }, 800)
+    }, 1000)
   }, [trending, pathname])
 
   return (
@@ -127,7 +127,7 @@ export default function Home() {
           </li>
         </ul>
       </Nav>
-      <h2>Últimos lançamentos.</h2>
+      <h2>Últimos lançamentos</h2>
       <ContainerUltimosLancamentos>
         <Carousel
           itemsToShow={5}

@@ -29,7 +29,15 @@ export default function Signup() {
         return;
       }
 
-      await auth.register(email, password, phone)
+      const response = await auth.register(email, password, phone)
+
+      if(response) {
+        alert(`
+          Conta cadastrada com sucesso, Por favor, 
+          confirme sua conta clicado link que será enviado para seu email!
+        `)
+      }
+
       navigate("/login")
       return true
 

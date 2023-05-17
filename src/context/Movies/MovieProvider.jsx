@@ -26,7 +26,7 @@ const MovieProvider = ({ children }) => {
       const numberAleatorio = Math.random() * 32 + 55 * 3
       const [ responseAllData, ResponseReting ] = await Promise.all([
         list('movie', 'popular', Math.ceil(numberAleatorio)),
-        trendingSegment(pathname === "/filmes" || pathname === "/" ? "movie" : "tv", Math.ceil(numberAleatorio * 3)),
+        trendingSegment(pathname === "/filmes" || pathname === "/" ? "movie" : "tv"),
       ])
 
       setAllData({

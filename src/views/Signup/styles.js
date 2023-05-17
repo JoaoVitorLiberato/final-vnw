@@ -5,6 +5,7 @@ export const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
   color: #fff;
+  transform: translateY(30px);
 `
 
 export const Form = styled.form`
